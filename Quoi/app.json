@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "sdkVersion": "27.0.0",
+    "orientation": "portrait",
+    "icon": "./icon.png",
+    "splash": {
+      "resizeMode": "contain",
+      "image": "./splash.png"
+    }
+  }
+}
