@@ -3377,7 +3377,7 @@ hoek@4.x.x:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.1.tgz#9634502aa12c445dd5a7c5734b572bb8738aacbb"
 
-hoist-non-react-statics@^2.2.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
+hoist-non-react-statics@^2.2.0, hoist-non-react-statics@^2.3.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.0.tgz#d2ca2dfc19c5a91c5a6615ce8e564ef0347e2a40"
 
@@ -5742,6 +5742,13 @@ react-lifecycles-compat@^1.0.2:
 react-lifecycles-compat@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.2.tgz#7279047275bd727a912e25f734c0559527e84eff"
+
+react-native-authentication-helpers@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-authentication-helpers/-/react-native-authentication-helpers-0.1.0.tgz#9e249c62fa9154fcfd198242492948f990d90010"
+  dependencies:
+    fbemitter "^2.1.1"
+    hoist-non-react-statics "^2.3.0"
 
 react-native-branch@2.0.0-beta.3:
   version "2.0.0-beta.3"

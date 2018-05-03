@@ -1,24 +1,12 @@
 import React from 'react';
 import { Button, Image, StatusBar, StyleSheet, Text, View } from 'react-native';
 
-import fetchUserDataAsync from '../fetchUserDataAsync';
-import Constants from '../Constants';
+import Constants from '../util/Constants';
 
 const EXAMPLE_TICKET_WIDTH = Constants.screen.width - 40;
 const EXAMPLE_TICKET_HEIGHT = EXAMPLE_TICKET_WIDTH / 750 * 502;
 
-// let userData = await fetchUserDataAsync(
-//   'hhER9W5gFToFt4lfXyonLU6vyxAtinM0s996'
-// );
-// this.setState({ userData });
-
 export default class AuthHome extends React.Component {
-  state = {
-    userData: null,
-  };
-
-  componentDidMount() {}
-
   render() {
     return (
       <View style={styles.container}>

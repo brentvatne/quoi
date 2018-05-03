@@ -19,3 +19,7 @@ export default async uuid => {
   let result = await apolloFetch({ query, variables: { uuid } });
   return result.data.events[0].me;
 };
+
+// let userData = await fetchUserDataAsync(
+//   'hhER9W5gFToFt4lfXyonLU6vyxAtinM0s996'
+// );
