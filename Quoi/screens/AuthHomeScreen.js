@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Image, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { setUser } from 'react-native-authentication-helpers';
 
 import CachedImage from '../components/CachedImage';
 import Constants from '../util/Constants';
@@ -44,11 +45,16 @@ export default class AuthHomeScreen extends React.Component {
 
         <Button
           title="Browse anonymously"
-          onPress={() => this.props.navigation.navigate('Main')}
+          onPress={this._handlePressBrowseAnonymously}
         />
         <StatusBar barStyle="default" />
       </View>
     );
+  }
+
+  _handlePressBrowseAnonymously = () => {
+    setUser({ type: 'anonymous' });
+    this.props.navigation.navigate('Main');
   }
 }
 

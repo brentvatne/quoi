@@ -14,6 +14,7 @@ let MainStack = createStackNavigator(
   {
     Testing: TestingScreen,
     Feed: FeedScreen,
+    AuthScanner: AuthScannerScreen,
   },
   {
     initialRouteName: 'Feed',

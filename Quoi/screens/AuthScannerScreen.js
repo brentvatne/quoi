@@ -1,10 +1,20 @@
 import React from 'react';
-import { Button, StatusBar, StyleSheet, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Button,
+  StatusBar,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { BarCodeScanner } from 'expo';
 import { setUser } from 'react-native-authentication-helpers';
 import fetchUserDataAsync from '../util/fetchUserDataAsync';
 
 export default class AuthScannerScreen extends React.Component {
+  static navigationOptions = {
+    header: null,
+  };
+
   state = {
     loading: false,
   };
@@ -32,7 +42,7 @@ export default class AuthScannerScreen extends React.Component {
 
       if (userData) {
         setUser({ ...userData, ticketId });
-        this.props.navigation.navigate('Main');
+        this.props.navigation.navigate('Feed');
       } else {
         alert('No matching ticket found');
       }
@@ -53,6 +63,8 @@ export default class AuthScannerScreen extends React.Component {
           style={{ flex: 1 }}
         />
 
+        {this.state.loading ? this._renderLoading() : null}
+
         <View
           style={{
             ...StyleSheet.absoluteFillObject,
@@ -72,4 +84,20 @@ export default class AuthScannerScreen extends React.Component {
       </View>
     );
   }
+
+  _renderLoading = () => {
+    return (
+      <View
+        style={[
+          StyleSheet.absoluteFill,
+          {
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'rgba(0,0,0,0.2)',
+          },
+        ]}>
+        <ActivityIndicator size="large" color="#fff" />
+      </View>
+    );
+  };
 }

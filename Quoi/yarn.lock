@@ -5739,7 +5739,7 @@ react-lifecycles-compat@^1.0.2:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-1.1.4.tgz#fc005c72849b7ed364de20a0f64ff58ebdc2009a"
 
-react-lifecycles-compat@^3.0.2:
+react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.2.tgz#7279047275bd727a912e25f734c0559527e84eff"
 
@@ -5785,7 +5785,7 @@ react-native-maps@0.21.0:
     babel-plugin-module-resolver "^2.3.0"
     babel-preset-react-native "1.9.0"
 
-react-native-paper@^1.4.0, react-native-paper@^1.4.1:
+react-native-paper@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-1.4.1.tgz#81df909c14d9ae78274662df97c3b35224aa39a9"
   dependencies:
@@ -5925,31 +5925,30 @@ react-navigation-deprecated-tab-navigator@1.1.0:
   dependencies:
     react-native-tab-view "^0.0.74"
 
-react-navigation-tabs@0.1.0-alpha.7:
-  version "0.1.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/react-navigation-tabs/-/react-navigation-tabs-0.1.0-alpha.7.tgz#bcea5b031a3db3b4230be63f17fed721bf78e198"
+react-navigation-tabs@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-navigation-tabs/-/react-navigation-tabs-0.2.0.tgz#d25be64e01a728c893a93cfeee6b176ab74d67de"
   dependencies:
     hoist-non-react-statics "^2.5.0"
     prop-types "^15.6.0"
     react-lifecycles-compat "^1.0.2"
-    react-native-paper "^1.4.0"
     react-native-safe-area-view "^0.7.0"
     react-native-tab-view "~0.0.77"
 
-react-navigation@2.0.0-rc.5:
-  version "2.0.0-rc.5"
-  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-2.0.0-rc.5.tgz#13c46a94954977720b1def6d6b5a1d81ac25fa69"
+react-navigation@2.0.0-rc.9:
+  version "2.0.0-rc.9"
+  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-2.0.0-rc.9.tgz#5b26de95614af5264cdb615c0a74030c0475c954"
   dependencies:
     clamp "^1.0.1"
     create-react-context "^0.2.1"
     hoist-non-react-statics "^2.2.0"
     path-to-regexp "^1.7.0"
     prop-types "^15.5.10"
-    react-lifecycles-compat "^1.0.2"
+    react-lifecycles-compat "^3"
     react-native-drawer-layout-polyfill "^1.3.2"
     react-native-safe-area-view "^0.7.0"
     react-navigation-deprecated-tab-navigator "1.1.0"
-    react-navigation-tabs "0.1.0-alpha.7"
+    react-navigation-tabs "0.2.0"
 
 react-proxy@^1.1.7:
   version "1.1.8"
