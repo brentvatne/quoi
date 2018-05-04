@@ -11,25 +11,9 @@ import {
   StatusBar,
   View,
 } from 'react-native';
-import { ApolloProvider, graphql } from 'react-apollo';
 import { Permissions, ImagePicker } from 'expo';
-import { AUTH_TYPE } from 'aws-appsync/lib/link/auth-link';
-import AWSAppSyncClient from 'aws-appsync';
+import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-
-import AppSyncConfig from '../aws-exports';
-
-const client = new AWSAppSyncClient({
-  url: AppSyncConfig.graphqlEndpoint,
-  region: AppSyncConfig.region,
-  auth: {
-    type: AUTH_TYPE.AWS_IAM,
-    credentials: {
-      accessKeyId: AppSyncConfig.accessKeyId,
-      secretAccessKey: AppSyncConfig.secretAccessKey,
-    },
-  },
-});
 
 let FAKE_UUID = 'hhER9W5gFToFt4lfXyonLU6vyxAtinM0s996';
 const getSignedStorageUrlAsync = async uuid => {
@@ -41,16 +25,6 @@ const getSignedStorageUrlAsync = async uuid => {
   return result;
 };
 
-export default class Testing extends React.Component {
-  render() {
-    return (
-      <ApolloProvider client={client}>
-        <TestContent />
-      </ApolloProvider>
-    );
-  }
-}
-
 @graphql(gql`
   query GetPosts {
     listPosts {
@@ -60,7 +34,7 @@ export default class Testing extends React.Component {
     }
   }
 `)
-class TestContent extends React.Component {
+export default class TestingScreen extends React.Component {
   render() {
     return (
       <ScrollView
@@ -166,7 +140,6 @@ class ImageUploader extends React.Component {
     Share.share({
       message: this.state.image,
       title: 'Check out this photo',
-      url: this.state.image,
     });
   };
 
@@ -217,7 +190,7 @@ async function uploadImageAsync(imageUrl, uuid) {
   const response = await fetch(imageUrl);
   const blob = await response.blob();
 
-  await fetch(signedUrl, { method: 'PUT', body: blob});
+  await fetch(signedUrl, { method: 'PUT', body: blob });
   return targetUrl;
 }
 

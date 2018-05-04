@@ -4,7 +4,7 @@ import { BarCodeScanner } from 'expo';
 import { setUser } from 'react-native-authentication-helpers';
 import fetchUserDataAsync from '../util/fetchUserDataAsync';
 
-export default class AuthScanner extends React.Component {
+export default class AuthScannerScreen extends React.Component {
   state = {
     loading: false,
   };
@@ -32,7 +32,7 @@ export default class AuthScanner extends React.Component {
 
       if (userData) {
         setUser({ ...userData, ticketId });
-        this.props.navigation.navigate('MainStack');
+        this.props.navigation.navigate('Main');
       } else {
         alert('No matching ticket found');
       }

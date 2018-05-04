@@ -1,12 +1,13 @@
 import React from 'react';
 import { Button, Image, StatusBar, StyleSheet, Text, View } from 'react-native';
 
+import CachedImage from '../components/CachedImage';
 import Constants from '../util/Constants';
 
 const EXAMPLE_TICKET_WIDTH = Constants.screen.width - 40;
 const EXAMPLE_TICKET_HEIGHT = EXAMPLE_TICKET_WIDTH / 750 * 502;
 
-export default class AuthHome extends React.Component {
+export default class AuthHomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
@@ -28,7 +29,7 @@ export default class AuthHome extends React.Component {
             shadowRadius: 5,
             backgroundColor: '#fff',
           }}>
-          <Image
+          <CachedImage
             source={require('../assets/ticket.png')}
             style={{
               width: EXAMPLE_TICKET_WIDTH,
@@ -39,6 +40,11 @@ export default class AuthHome extends React.Component {
         <Button
           title="Scan ticket"
           onPress={() => this.props.navigation.navigate('AuthScanner')}
+        />
+
+        <Button
+          title="Browse anonymously"
+          onPress={() => this.props.navigation.navigate('Main')}
         />
         <StatusBar barStyle="default" />
       </View>
