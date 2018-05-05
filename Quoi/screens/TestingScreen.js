@@ -14,17 +14,9 @@ import {
 import { Permissions, ImagePicker } from 'expo';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import uploadImageAsync from '../util/uploadImageAsync';
 
 let FAKE_UUID = 'hhER9W5gFToFt4lfXyonLU6vyxAtinM0s996';
-const getSignedStorageUrlAsync = async uuid => {
-  let response = await fetch(
-    `https://7bz0uwltek.execute-api.us-east-1.amazonaws.com/production/getSignedStorageUrl?uuid=${uuid}`
-  );
-  let result = await response.json();
-  console.log(result);
-  return result;
-};
-
 @graphql(gql`
   query GetPosts {
     listPosts {
@@ -183,15 +175,6 @@ class ImageUploader extends React.Component {
       this.setState({ uploading: false });
     }
   };
-}
-
-async function uploadImageAsync(imageUrl, uuid) {
-  let { signedUrl, targetUrl } = await getSignedStorageUrlAsync(uuid);
-  const response = await fetch(imageUrl);
-  const blob = await response.blob();
-
-  await fetch(signedUrl, { method: 'PUT', body: blob });
-  return targetUrl;
 }
 
 const styles = StyleSheet.create({

@@ -19,6 +19,14 @@ let MainStack = createStackNavigator(
   {
     initialRouteName: 'Feed',
     mode: 'modal',
+    cardStyle: {
+      backgroundColor: '#fff',
+    },
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: '#fff',
+      },
+    },
   }
 );
 

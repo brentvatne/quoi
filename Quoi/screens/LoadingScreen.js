@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
+import { Font, Icon } from 'expo';
 import {
   clearUser,
   withUser,
@@ -7,8 +8,18 @@ import {
 } from 'react-native-authentication-helpers';
 
 export default class LoadingScreen extends React.Component {
-  componentDidMount() {
-    this._loadUserAsync(); }
+  async componentDidMount() {
+    // clearUser();
+    await this._loadAssetsAsync();
+    await this._loadUserAsync();
+  }
+
+  _loadAssetsAsync = async () => {
+    await Font.loadAsync({
+      ...Icon.Ionicons.font,
+      Wellfleet: require('../assets/Wellfleet-Regular.ttf'),
+    });
+  };
 
   _loadUserAsync = async () => {
     let user;

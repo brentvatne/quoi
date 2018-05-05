@@ -1,20 +1,32 @@
 import React from 'react';
-import { Button, Image, StatusBar, StyleSheet, Text, View } from 'react-native';
+import {
+  Image,
+  StatusBar,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { setUser } from 'react-native-authentication-helpers';
 
+import Button from '../components/Button';
 import CachedImage from '../components/CachedImage';
 import Constants from '../util/Constants';
 
-const EXAMPLE_TICKET_WIDTH = Constants.screen.width - 40;
+const EXAMPLE_TICKET_MARGIN = 80;
+const EXAMPLE_TICKET_WIDTH = Constants.screen.width - EXAMPLE_TICKET_MARGIN;
 const EXAMPLE_TICKET_HEIGHT = EXAMPLE_TICKET_WIDTH / 750 * 502;
 
 export default class AuthHomeScreen extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}>
         <Text style={styles.title}>Quoi</Text>
         <Text style={styles.subtitle}>
-          Share photos of what's going on at React Europe 2018
+          Share photos of what's going on at React Europe. Scan your ticket to
+          post, or just browse anonymously.
         </Text>
         <View
           style={{
@@ -38,41 +50,66 @@ export default class AuthHomeScreen extends React.Component {
             }}
           />
         </View>
+
         <Button
-          title="Scan ticket"
+          title="Scan your ticket"
           onPress={() => this.props.navigation.navigate('AuthScanner')}
+          containerStyle={{
+            marginBottom: 15,
+            marginTop: 0,
+            backgroundColor: '#eee',
+            padding: 15,
+            borderRadius: 5,
+            overflow: 'hidden',
+          }}
         />
 
         <Button
           title="Browse anonymously"
+          style={{
+            backgroundColor: '#eee',
+            padding: 15,
+            borderRadius: 5,
+            overflow: 'hidden',
+          }}
           onPress={this._handlePressBrowseAnonymously}
         />
+
+        <Button
+          title="Terms of service"
+          onPress={this._handlePressTerms}
+          style={{ fontSize: 15, marginTop: 25, color: '#888' }}
+        />
         <StatusBar barStyle="default" />
-      </View>
+      </ScrollView>
     );
   }
 
   _handlePressBrowseAnonymously = () => {
     setUser({ type: 'anonymous' });
     this.props.navigation.navigate('Main');
-  }
+  };
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  contentContainer: {
+    paddingTop: 120,
     alignItems: 'center',
-    justifyContent: 'center',
   },
   title: {
-    fontSize: 30,
-    fontWeight: 'bold',
+    fontSize: 45,
+    fontFamily: 'Wellfleet',
   },
   subtitle: {
     color: 'rgba(0,0,0,0.8)',
-    marginTop: 5,
-    fontSize: 15,
+    marginTop: 7,
+    marginHorizontal: 15,
+    marginBottom: 10,
+    fontSize: 17,
     textAlign: 'center',
-  }
+  },
 });

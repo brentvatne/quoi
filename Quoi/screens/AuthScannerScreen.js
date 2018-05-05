@@ -36,10 +36,10 @@ export default class AuthScannerScreen extends React.Component {
 
     try {
       let ticketId = result.data;
-      console.log({ ticketId });
       let userData = await fetchUserDataAsync(ticketId);
-      console.log({ userData });
-
+      if (!this._isMounted) {
+        return;
+      }
       if (userData) {
         setUser({ ...userData, ticketId });
         this.props.navigation.navigate('Feed');

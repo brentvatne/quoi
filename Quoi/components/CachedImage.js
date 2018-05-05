@@ -15,10 +15,8 @@ export default class CachedImage extends React.Component {
       if (typeof source === 'number') {
         await Asset.fromModule(source).downloadAsync();
       } else if (source && source.uri) {
-        let parts = source.uri.split('.');
-        let ext = parts[parts.length - 1];
         let name = sha256(source.uri);
-        let filepath = `${FileSystem.documentDirectory}${name}.${ext}'`;
+        let filepath = `${FileSystem.documentDirectory}${name}.png'`;
         let { exists } = await FileSystem.getInfoAsync(filepath);
         if (exists) {
           source = { uri: filepath };
@@ -36,6 +34,7 @@ export default class CachedImage extends React.Component {
 
   render() {
     if (this.state.source) {
+      console.log(this.state.source);
       return <Image {...this.props} source={this.state.source} />;
     } else {
       let safeImageStyle = { ...StyleSheet.flatten(this.props.style) };
