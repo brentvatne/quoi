@@ -5,6 +5,7 @@ import { Ionicons } from 'react-native-vector-icons';
 import { withUser, clearUser } from 'react-native-authentication-helpers';
 import { Permissions, ImagePicker, ImageManipulator } from 'expo';
 import { compose, graphql } from 'react-apollo';
+import { withNavigationFocus } from 'react-navigation';
 import gql from 'graphql-tag';
 
 import Feed from '../components/Feed';
@@ -18,13 +19,13 @@ class FeedScreen extends React.Component {
       fontSize: 20,
       fontFamily: 'Wellfleet',
     },
-    headerLeft: (
-      <Button
-        title="Info"
-        onPress={() => {}}
-        containerStyle={{ marginHorizontal: 10 }}
-      />
-    ),
+    // headerLeft: (
+    //   <Button
+    //     title="Info"
+    //     onPress={() => {}}
+    //     containerStyle={{ marginHorizontal: 10 }}
+    //   />
+    // ),
   });
 
   render() {
@@ -34,7 +35,11 @@ class FeedScreen extends React.Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <Feed posts={posts} refreshAsync={this.props.data.refetch} />
+        <Feed
+          posts={posts}
+          isVisible={this.props.isFocused}
+          refreshAsync={this.props.data.refetch}
+        />
 
         {this._renderControls()}
       </View>
@@ -71,7 +76,6 @@ class FeedScreen extends React.Component {
     });
     if (!result.cancelled) {
       await this._createPostAsync(result);
-      await this.props.data.refetch();
     }
   };
 
@@ -88,29 +92,11 @@ class FeedScreen extends React.Component {
     });
     if (!result.cancelled) {
       await this._createPostAsync(result);
-      await this.props.data.refetch();
     }
   };
 
-  _createPostAsync = async ({ uri }) => {
-    let { ticketId, email, firstName } = this.props.user;
-    let { uri: resizedUri, width, height } = await ImageManipulator.manipulate(
-      uri,
-      [{ resize: { width: 500, height: 500 } }],
-      { format: 'png' }
-    );
-    let fileUrl = await uploadImageAsync(resizedUri, ticketId);
-    let result = await this.props.createAuthenticatedPost({
-      variables: {
-        email,
-        name: firstName,
-        fileUrl,
-        width,
-        height,
-        uuid: ticketId,
-      },
-    });
-    return result;
+  _createPostAsync = ({ uri }) => {
+    this.props.navigation.navigate('EditPost', { originalUri: uri });
   };
 
   _promptAuthentication = () => {
@@ -159,40 +145,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const ADD_POST_MUTATION = gql`
-  mutation addPost(
-    $uuid: String!
-    $name: String!
-    $email: String!
-    $fileUrl: String!
-    $width: Int!
-    $height: Int!
-    $lat: Int
-    $lon: Int
-  ) {
-    createAuthenticatedPost(
-      input: {
-        uuid: $uuid
-        name: $name
-        email: $email
-        fileUrl: $fileUrl
-        width: $width
-        height: $height
-        lat: $lat
-        lon: $lon
-      }
-    ) {
-      id
-      name
-      email
-      fileUrl
-      width
-      height
-      lat
-      lon
-    }
-  }
-`;
 const GET_POSTS_QUERY = gql`
   query GetPosts {
     listPosts {
@@ -212,5 +164,6 @@ const GET_POSTS_QUERY = gql`
 
 export default compose(
   graphql(GET_POSTS_QUERY, { options: { fetchPolicy: 'network-only' } }),
-  graphql(ADD_POST_MUTATION, { name: 'createAuthenticatedPost' })
-)(withUser(FeedScreen));
+  withUser,
+  withNavigationFocus
+)(FeedScreen);

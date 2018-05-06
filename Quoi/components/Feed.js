@@ -16,6 +16,12 @@ export default class Feed extends React.Component {
     refreshing: false,
   };
 
+  componentDidUpdate(prevProps) {
+    if (!prevProps.isVisible && this.props.isVisible) {
+      this._refreshAsync();
+    }
+  }
+
   render() {
     return (
       <FlatList
@@ -33,6 +39,10 @@ export default class Feed extends React.Component {
   }
 
   _refreshAsync = async () => {
+    if (this.state.refreshing) {
+      return;
+    }
+
     try {
       this.setState({ refreshing: true });
       await this.props.refreshAsync();

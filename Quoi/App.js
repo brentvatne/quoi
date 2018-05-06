@@ -6,15 +6,39 @@ import AppSyncClient from './AppSyncClient';
 
 import AuthHomeScreen from './screens/AuthHomeScreen';
 import AuthScannerScreen from './screens/AuthScannerScreen';
-import TestingScreen from './screens/TestingScreen';
+import EditPostScreen from './screens/EditPostScreen';
 import FeedScreen from './screens/FeedScreen';
 import LoadingScreen from './screens/LoadingScreen';
+import TestingScreen from './screens/TestingScreen';
+
+let EditPostStack = createStackNavigator(
+  {
+    EditPost: EditPostScreen,
+  },
+  {
+    initialRouteName: 'EditPost',
+    cardStyle: {
+      backgroundColor: '#fff',
+    },
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: '#fff',
+      },
+    },
+  }
+);
+
+EditPostStack.navigationOptions = {
+  header: null,
+  gesturesEnabled: false,
+};
 
 let MainStack = createStackNavigator(
   {
     Testing: TestingScreen,
     Feed: FeedScreen,
     AuthScanner: AuthScannerScreen,
+    EditPostStack: EditPostStack,
   },
   {
     initialRouteName: 'Feed',
