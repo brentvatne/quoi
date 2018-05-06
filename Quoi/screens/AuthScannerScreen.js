@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { BarCodeScanner } from 'expo';
 import { setUser } from 'react-native-authentication-helpers';
+import { SafeAreaView } from 'react-navigation';
+
 import fetchUserDataAsync from '../util/fetchUserDataAsync';
 
 export default class AuthScannerScreen extends React.Component {
@@ -64,31 +66,43 @@ export default class AuthScannerScreen extends React.Component {
           style={{ flex: 1 }}
         />
 
-        {this.state.loading ? this._renderLoading() : null}
-
-        <View
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            top: null,
-            bottom: 20,
-            left: 15,
-            alignItems: 'flex-start',
-          }}>
-          {Platform.OS === 'ios' ? (
-            <Button
-              color="#fff"
-              title="Close"
-              onPress={() => this.props.navigation.goBack()}
-            />
-          ) : null}
-        </View>
+        {this._maybeRenderLoading()}
+        {this._maybeRenderCloseButton()}
 
         <StatusBar hidden />
       </View>
     );
   }
 
-  _renderLoading = () => {
+  _maybeRenderCloseButton = () => {
+    if (Platform.OS !== 'ios') {
+      return;
+    }
+
+    return (
+      <SafeAreaView
+        forceInset={{ top: 'never', bottom: 'always' }}
+        style={{
+          ...StyleSheet.absoluteFillObject,
+          top: null,
+          bottom: 0,
+          left: 15,
+          alignItems: 'flex-start',
+        }}>
+        <Button
+          color="#fff"
+          title="Close"
+          onPress={() => this.props.navigation.goBack()}
+        />
+      </SafeAreaView>
+    );
+  };
+
+  _maybeRenderLoading = () => {
+    if (!this.state.loading) {
+      return;
+    }
+
     return (
       <View
         style={[

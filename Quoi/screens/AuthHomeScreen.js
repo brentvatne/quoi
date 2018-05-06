@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  Image,
-  StatusBar,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Image, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import { setUser } from 'react-native-authentication-helpers';
+import { SafeAreaView } from 'react-navigation';
 
 import Button from '../components/Button';
 import CachedImage from '../components/CachedImage';
@@ -22,67 +17,74 @@ export default class AuthHomeScreen extends React.Component {
     return (
       <ScrollView
         style={styles.container}
-        contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.title}>Quoi</Text>
-        <Text style={styles.subtitle}>
-          Share photos of what's going on at React Europe. Scan your ticket to
-          post, or just browse anonymously.
-        </Text>
-        <View
-          style={{
-            marginTop: 20,
-            marginBottom: 20,
-            padding: 10,
-            borderWidth: 1,
-            borderColor: '#eee',
-            shadowColor: '#eee',
-            elevation: 2,
-            shadowOffset: { x: 0, y: 0 },
-            shadowOpacity: 0.8,
-            shadowRadius: 5,
-            backgroundColor: '#fff',
-          }}>
-          <CachedImage
-            source={require('../assets/ticket.png')}
+        contentContainerStyle={{ paddingTop: 40 }}>
+        <SafeAreaView
+          forceInset={{ top: 'always' }}
+          style={styles.contentContainer}>
+          <Text style={styles.title}>Quoi</Text>
+          <Text style={styles.subtitle}>
+            Share photos of what's going on at React Europe. Scan your ticket to
+            post, or just browse anonymously.
+          </Text>
+          <View
             style={{
-              width: EXAMPLE_TICKET_WIDTH,
-              height: EXAMPLE_TICKET_HEIGHT,
+              marginTop: 20,
+              marginBottom: 20,
+              padding: 10,
+              borderWidth: 1,
+              borderColor: '#eee',
+              shadowColor: '#eee',
+              elevation: 2,
+              shadowOffset: { x: 0, y: 0 },
+              shadowOpacity: 0.8,
+              shadowRadius: 5,
+              backgroundColor: '#fff',
+            }}>
+            <CachedImage
+              source={require('../assets/ticket.png')}
+              style={{
+                width: EXAMPLE_TICKET_WIDTH,
+                height: EXAMPLE_TICKET_HEIGHT,
+              }}
+            />
+          </View>
+
+          <Button
+            withBorder
+            title="Scan your ticket"
+            onPress={() => this.props.navigation.navigate('AuthScanner')}
+            containerStyle={{
+              marginBottom: 15,
+              marginTop: 0,
+              backgroundColor: '#eee',
+              padding: 15,
+              borderRadius: 5,
+              overflow: 'hidden',
             }}
           />
-        </View>
 
-        <Button
-          withBorder
-          title="Scan your ticket"
-          onPress={() => this.props.navigation.navigate('AuthScanner')}
-          containerStyle={{
-            marginBottom: 15,
-            marginTop: 0,
-            backgroundColor: '#eee',
-            padding: 15,
-            borderRadius: 5,
-            overflow: 'hidden',
-          }}
-        />
+          <Button
+            withBorder
+            title="Browse anonymously"
+            onPress={this._handlePressBrowseAnonymously}
+            containerStyle={{
+              marginBottom: 25,
+              marginTop: 0,
+              backgroundColor: '#eee',
+              padding: 15,
+              borderRadius: 5,
+              overflow: 'hidden',
+            }}
+          />
 
-        <Button
-          withBorder
-          title="Browse anonymously"
-          style={{
-            backgroundColor: '#eee',
-            padding: 15,
-            borderRadius: 5,
-            overflow: 'hidden',
-          }}
-          onPress={this._handlePressBrowseAnonymously}
-        />
+          <Button
+            title="Terms of service"
+            onPress={this._handlePressTerms}
+            style={{ fontSize: 15, marginTop: 0, color: '#888' }}
+          />
 
-        <Button
-          title="Terms of service"
-          onPress={this._handlePressTerms}
-          style={{ fontSize: 15, marginTop: 25, color: '#888' }}
-        />
-        <StatusBar barStyle="default" />
+          <StatusBar barStyle="default" />
+        </SafeAreaView>
       </ScrollView>
     );
   }
@@ -99,7 +101,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   contentContainer: {
-    paddingTop: 55,
     paddingBottom: 40,
     alignItems: 'center',
   },

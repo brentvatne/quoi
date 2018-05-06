@@ -5,12 +5,55 @@ import { Ionicons } from 'react-native-vector-icons';
 import { withUser, clearUser } from 'react-native-authentication-helpers';
 import { Permissions, ImagePicker, ImageManipulator } from 'expo';
 import { compose, graphql } from 'react-apollo';
-import { withNavigationFocus } from 'react-navigation';
+import { withNavigationFocus, withNavigation } from 'react-navigation';
 import gql from 'graphql-tag';
 
-import Feed from '../components/Feed';
 import Button from '../components/Button';
+import Feed from '../components/Feed';
+import GravatarImage from '../components/GravatarImage';
 import uploadImageAsync from '../util/uploadImageAsync';
+
+class ProfileHeaderButton extends React.Component {
+  render() {
+    if (!this.props.user || this.props.user.type === 'anonymous') {
+      // render other thing here
+      return null;
+    }
+
+    return (
+      <BorderlessButton
+        onPress={this._handlePress}
+        style={{ paddingHorizontal: 12 }}>
+        <GravatarImage
+          style={{ width: 30, height: 30, borderRadius: 15 }}
+          email={this.props.user.email}
+        />
+      </BorderlessButton>
+    );
+  }
+
+  _handlePress = () => {
+    Alert.alert(
+      `You are currently signed in as ${this.props.user.firstName} ${this.props.user.lastName}`,
+      'This information is made available by querying the React Europe GraphQL API with your ticket QR code.',
+      [
+        { text: 'OK', onPress: () => {}, style: 'cancel' },
+        {
+          text: 'Sign out',
+          onPress: () => {
+            clearUser();
+            this.props.navigation.navigate('Auth');
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+}
+
+const ProfileHeaderButtonContainer = compose(withNavigation, withUser)(
+  ProfileHeaderButton
+);
 
 class FeedScreen extends React.Component {
   static navigationOptions = ({ navigation }) => ({
@@ -19,13 +62,7 @@ class FeedScreen extends React.Component {
       fontSize: 20,
       fontFamily: 'Wellfleet',
     },
-    // headerLeft: (
-    //   <Button
-    //     title="Info"
-    //     onPress={() => {}}
-    //     containerStyle={{ marginHorizontal: 10 }}
-    //   />
-    // ),
+    headerRight: <ProfileHeaderButtonContainer />,
   });
 
   render() {

@@ -12,13 +12,14 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import Constants from '../util/Constants';
+import GravatarImage from '../components/GravatarImage';
 
 const IMAGE_MARGIN_INSIDE = 3;
 const IMAGE_MARGIN_OUTSIDE = 6;
 const IMAGE_SIZE =
   Constants.screen.width / 2 - IMAGE_MARGIN_INSIDE - IMAGE_MARGIN_OUTSIDE;
 
-export default class Feed extends React.Component {
+export default class Feed extends React.PureComponent {
   state = {
     refreshing: false,
   };
@@ -60,6 +61,7 @@ export default class Feed extends React.Component {
   };
 
   _renderItem = ({ item, index }) => {
+    console.log(item.email);
     return (
       <View style={styles.item}>
         <CachedImage
@@ -74,6 +76,9 @@ export default class Feed extends React.Component {
               index % 2 === 0 ? IMAGE_MARGIN_INSIDE : IMAGE_MARGIN_OUTSIDE,
           }}
         />
+        <View style={styles.avatarContainer}>
+          <GravatarImage email={item.email} style={styles.avatar} />
+        </View>
       </View>
     );
   };
@@ -86,6 +91,16 @@ const styles = StyleSheet.create({
   },
   listContentContainer: {
     paddingBottom: Platform.OS === 'ios' ? 110 : 100,
+  },
+  avatarContainer: {
+    position: 'absolute',
+    bottom: 5,
+    left: 10,
+  },
+  avatar: {
+    width: 30,
+    height: 30,
+    borderRadius: 15,
   },
   item: {
     flex: 1,

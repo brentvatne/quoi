@@ -9,7 +9,7 @@ import {
 
 export default class LoadingScreen extends React.Component {
   async componentDidMount() {
-    clearUser();
+    // clearUser();
     await this._loadAssetsAsync();
     await this._loadUserAsync();
   }
