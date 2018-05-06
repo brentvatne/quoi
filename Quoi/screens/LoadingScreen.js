@@ -9,7 +9,7 @@ import {
 
 export default class LoadingScreen extends React.Component {
   async componentDidMount() {
-    // clearUser();
+    clearUser();
     await this._loadAssetsAsync();
     await this._loadUserAsync();
   }
@@ -37,7 +37,7 @@ export default class LoadingScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator size="large" color="#eee" />
+        <ActivityIndicator size="large" color="#000" />
       </View>
     );
   }

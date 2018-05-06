@@ -2,6 +2,7 @@ import React from 'react';
 import {
   ActivityIndicator,
   Button,
+  Platform,
   StatusBar,
   StyleSheet,
   View,
@@ -73,11 +74,13 @@ export default class AuthScannerScreen extends React.Component {
             left: 15,
             alignItems: 'flex-start',
           }}>
-          <Button
-            color="#fff"
-            title="Close"
-            onPress={() => this.props.navigation.goBack()}
-          />
+          {Platform.OS === 'ios' ? (
+            <Button
+              color="#fff"
+              title="Close"
+              onPress={() => this.props.navigation.goBack()}
+            />
+          ) : null}
         </View>
 
         <StatusBar hidden />

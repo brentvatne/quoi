@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { Ionicons } from 'react-native-vector-icons';
 import { withUser, clearUser } from 'react-native-authentication-helpers';
@@ -52,12 +52,20 @@ class FeedScreen extends React.Component {
         <BorderlessButton
           onPress={this._handlePressPicker}
           style={styles.controlButton}>
-          <Ionicons name="ios-photos-outline" size={40} />
+          <Ionicons
+            name="ios-photos-outline"
+            size={40}
+            style={styles.controlIcon}
+          />
         </BorderlessButton>
         <BorderlessButton
           onPress={this._handlePressCamera}
           style={styles.controlButton}>
-          <Ionicons name="ios-camera-outline" size={50} />
+          <Ionicons
+            name="ios-camera-outline"
+            size={50}
+            style={styles.controlIcon}
+          />
         </BorderlessButton>
       </View>
     );
@@ -124,24 +132,37 @@ class FeedScreen extends React.Component {
 const styles = StyleSheet.create({
   controlsContainer: {
     position: 'absolute',
-    bottom: 30,
     alignSelf: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: 'rgba(255, 255, 255, 0.9)',
     paddingTop: 6,
     paddingBottom: 3,
     paddingHorizontal: 15,
     borderRadius: 10,
-    borderColor: '#888',
-    shadowColor: '#888',
-    elevation: 3,
-    shadowOffset: { x: 0, y: 0 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
+    ...Platform.select({
+      ios: {
+        bottom: 30,
+        borderColor: '#888',
+        shadowColor: '#888',
+        shadowOffset: { x: 0, y: 0 },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+      },
+      android: {
+        bottom: 15,
+        backgroundColor: '#fff',
+        borderWidth: 0,
+        elevation: 3,
+      },
+    }),
   },
   controlButton: {
     paddingHorizontal: 15,
+    backgroundColor: 'transparent',
+  },
+  controlIcon: {
+    backgroundColor: 'transparent',
   },
 });
 

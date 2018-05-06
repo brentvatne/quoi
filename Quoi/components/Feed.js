@@ -1,6 +1,13 @@
 import React from 'react';
 import CachedImage from './CachedImage';
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import {
+  FlatList,
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -77,7 +84,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fbfbfb',
     flex: 1,
   },
-  listContentContainer: {},
+  listContentContainer: {
+    paddingBottom: Platform.OS === 'ios' ? 110 : 100,
+  },
   item: {
     flex: 1,
   },

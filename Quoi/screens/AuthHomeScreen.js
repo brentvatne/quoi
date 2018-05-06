@@ -36,7 +36,7 @@ export default class AuthHomeScreen extends React.Component {
             borderWidth: 1,
             borderColor: '#eee',
             shadowColor: '#eee',
-            elevation: 3,
+            elevation: 2,
             shadowOffset: { x: 0, y: 0 },
             shadowOpacity: 0.8,
             shadowRadius: 5,
@@ -52,6 +52,7 @@ export default class AuthHomeScreen extends React.Component {
         </View>
 
         <Button
+          withBorder
           title="Scan your ticket"
           onPress={() => this.props.navigation.navigate('AuthScanner')}
           containerStyle={{
@@ -65,6 +66,7 @@ export default class AuthHomeScreen extends React.Component {
         />
 
         <Button
+          withBorder
           title="Browse anonymously"
           style={{
             backgroundColor: '#eee',
@@ -97,7 +99,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   contentContainer: {
-    paddingTop: 120,
+    paddingTop: 55,
+    paddingBottom: 40,
     alignItems: 'center',
   },
   title: {
@@ -106,10 +109,10 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     color: 'rgba(0,0,0,0.8)',
-    marginTop: 7,
+    marginTop: 9,
     marginHorizontal: 15,
-    marginBottom: 10,
-    fontSize: 17,
+    marginBottom: 7,
+    fontSize: 16,
     textAlign: 'center',
   },
 });
