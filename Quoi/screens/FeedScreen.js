@@ -34,7 +34,9 @@ class ProfileHeaderButton extends React.Component {
 
   _handlePress = () => {
     Alert.alert(
-      `You are currently signed in as ${this.props.user.firstName} ${this.props.user.lastName}`,
+      `You are currently signed in as ${this.props.user.firstName} ${
+        this.props.user.lastName
+      }`,
       'This information is made available by querying the React Europe GraphQL API with your ticket QR code.',
       [
         { text: 'OK', onPress: () => {}, style: 'cancel' },
@@ -108,12 +110,33 @@ class FeedScreen extends React.Component {
     );
   };
 
+  _requestPermissionsAsync = async () => {
+    let { status: cameraRollStatus } = await Permissions.askAsync(
+      Permissions.CAMERA_ROLL
+    );
+    let { status: cameraStatus } = await Permissions.askAsync(
+      Permissions.CAMERA
+    );
+
+    if (cameraStatus === 'granted' && cameraRollStatus === 'granted') {
+      return 'granted';
+    } else {
+      return 'denied';
+    }
+  };
+
   _handlePressPicker = async () => {
     if (this.props.user.type === 'anonymous') {
       return this._promptAuthentication();
     }
 
-    let { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    let status = await this._requestPermissionsAsync();
+    if (status === 'denied') {
+      alert(
+        'This app needs camera and camera roll permissions in order to be able to share photos.'
+      );
+    }
+
     let result = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       aspect: [1, 1],
@@ -129,7 +152,13 @@ class FeedScreen extends React.Component {
       return this._promptAuthentication();
     }
 
-    let { status } = await Permissions.askAsync(Permissions.CAMERA);
+    let status = await this._requestPermissionsAsync();
+    if (status === 'denied') {
+      alert(
+        'This app needs camera and camera roll permissions in order to be able to share photos.'
+      );
+    }
+
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [1, 1],

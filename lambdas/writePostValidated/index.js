@@ -1,21 +1,20 @@
 let AWS = require('aws-sdk');
 let docClient = new AWS.DynamoDB.DocumentClient();
 let fetchUserAsync = require('./fetchUserAsync');
-let uuid = require('uuid/v1');
+let uuid = require('uuid/v4');
 
 exports.handler = async (event, context) => {
   try {
     console.log(event);
     console.log(context);
-    let { uuid, title, author, fileUrl } = event.arguments.input;
+    let { uuid, ...post } = event.arguments.input;
     let user = await fetchUserAsync(uuid);
     if (!user) {
-      throw new Error('Must provide a valid user id')
+      throw new Error('Must provide a valid user id');
     } else {
       await throwIfUserBannedAsync(user.email);
     }
 
-    let post = { title, author, fileUrl };
     console.log(post);
     let id = await savePostAsync(post);
     return {
@@ -51,9 +50,11 @@ async function throwIfUserBannedAsync(email) {
 
 async function savePostAsync(post) {
   let id = uuid();
+  let createdAt = new Date().getTime();
+  let visibility = 'published';
   let params = {
     TableName: 'PostTable',
-    Item: { id, ...post },
+    Item: { id, ...post, createdAt, visibility },
   };
 
   return new Promise((resolve, reject) => {

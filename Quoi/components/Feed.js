@@ -61,7 +61,6 @@ export default class Feed extends React.PureComponent {
   };
 
   _renderItem = ({ item, index }) => {
-    console.log(item.email);
     return (
       <View style={styles.item}>
         <CachedImage
