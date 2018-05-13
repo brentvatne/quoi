@@ -17,10 +17,13 @@ import { compose, graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Surface } from 'gl-react-expo';
 import { ContrastSaturationBrightness } from 'gl-react-contrast-saturation-brightness';
+import { BlurV } from 'gl-react-blur';
 
 import Button from '../components/Button';
 import Constants from '../util/Constants';
 import uploadImageAsync from '../util/uploadImageAsync';
+
+import blurMap from '../assets/radial.png';
 
 class Knob extends React.Component {
   state = { value: this.props.value };
@@ -37,7 +40,7 @@ class Knob extends React.Component {
     const { value } = this.state;
     const { label, max, min, step } = this.props;
     return (
-      <View style={{ flexDirection: 'column' }}>
+      <View style={{ flexDirection: 'column', padding: 10 }}>
         <Text style={{ fontWeight: 'bold' }}>{label}</Text>
         <Slider
           minimumValue={min}
@@ -94,6 +97,7 @@ class EditPostScreen extends React.Component {
       contrast: 1,
       saturation: 1,
       brightness: 1,
+      blur: 0,
     };
   }
 
@@ -106,7 +110,7 @@ class EditPostScreen extends React.Component {
   };
 
   render() {
-    const { contrast, saturation, brightness } = this.state;
+    const { contrast, saturation, brightness, blur } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <Surface
@@ -116,15 +120,17 @@ class EditPostScreen extends React.Component {
             height: Constants.screen.width,
           }}
         >
-          <ContrastSaturationBrightness
-            contrast={contrast}
-            saturation={saturation}
-            brightness={brightness}
-          >
-            {{ uri: this.state.uri }}
-          </ContrastSaturationBrightness>
+          <BlurV passes={4} map={blurMap} factor={blur}>
+            <ContrastSaturationBrightness
+              contrast={contrast}
+              saturation={saturation}
+              brightness={brightness}
+            >
+              {{ uri: this.state.uri }}
+            </ContrastSaturationBrightness>
+          </BlurV>
         </Surface>
-        <View>
+        <ScrollView style={{ flex: 1 }}>
           <Knob
             label="contrast"
             onChange={contrast => this.setState({ contrast })}
@@ -152,7 +158,16 @@ class EditPostScreen extends React.Component {
             step={0.1}
             live
           />
-        </View>
+          <Knob
+            label="blur"
+            onChange={blur => this.setState({ blur })}
+            value={blur}
+            min={0}
+            max={8}
+            step={0.1}
+            live
+          />
+        </ScrollView>
         {this._maybeRenderLoading()}
       </View>
     );
