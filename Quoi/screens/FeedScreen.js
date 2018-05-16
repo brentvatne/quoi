@@ -158,6 +158,12 @@ class FeedScreen extends React.Component {
             style={styles.controlIcon}
           />
         </BorderlessButton>
+        <BorderlessButton
+          onPress={this._handlePressLottery}
+          style={styles.controlButton}
+        >
+          <Ionicons name="ios-shuffle" size={50} style={styles.controlIcon} />
+        </BorderlessButton>
       </View>
     );
   };
@@ -219,6 +225,10 @@ class FeedScreen extends React.Component {
     if (!result.cancelled) {
       this._editPost(result);
     }
+  };
+
+  _handlePressLottery = async () => {
+    this.props.navigation.navigate('Lottery');
   };
 
   _editPost = ({ uri }) => {

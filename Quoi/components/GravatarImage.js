@@ -4,12 +4,20 @@ import md5 from 'crypto-js/md5';
 
 export default class GravatarImage extends React.PureComponent {
   render() {
+    const { size } = this.props;
     let gravatarUrl = `https://www.gravatar.com/avatar/${md5(
-      this.props.email
+      this.props.email,
     )}`;
 
     return (
-      <CachedImage source={{ uri: gravatarUrl }} style={this.props.style} />
+      <CachedImage
+        source={{ uri: gravatarUrl }}
+        style={{
+          width: size,
+          height: size,
+          borderRadius: size / 2,
+        }}
+      />
     );
   }
 }
