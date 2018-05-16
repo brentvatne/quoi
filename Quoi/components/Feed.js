@@ -16,6 +16,7 @@ import gql from 'graphql-tag';
 import CachedImage from './CachedImage';
 import Constants from '../util/Constants';
 import GravatarImage from '../components/GravatarImage';
+import FeedItem from '../components/FeedItem';
 
 const IMAGE_MARGIN_INSIDE = 3;
 const IMAGE_MARGIN_OUTSIDE = 6;
@@ -37,7 +38,10 @@ export default class Feed extends React.PureComponent {
     return (
       <FlatList
         style={[styles.listContainer, this.props.style]}
-        contentContainerStyle={[styles.listContentContainer, this.props.contentContainerStyle]}
+        contentContainerStyle={[
+          styles.listContentContainer,
+          this.props.contentContainerStyle,
+        ]}
         columnWrapperStyle={{ alignItems: 'flex-start' }}
         renderScrollComponent={props => (
           <ScrollView
@@ -76,34 +80,18 @@ export default class Feed extends React.PureComponent {
 
   _renderItem = ({ item, index }) => {
     return (
-      <View
-        style={[
-          styles.item,
-          {
-            paddingTop: 6,
-            paddingLeft:
-              index % 2 === 0 ? IMAGE_MARGIN_OUTSIDE : IMAGE_MARGIN_INSIDE,
-            paddingRight:
-              index % 2 === 0 ? IMAGE_MARGIN_INSIDE : IMAGE_MARGIN_OUTSIDE,
-          },
-        ]}
-      >
-        <BorderlessButton
-          onPress={() => this.props.onPressPost(item)}
-          activeOpacity={1}
-        >
-          <CachedImage
-            source={{ uri: item.fileUrl }}
-            style={{
-              width: IMAGE_SIZE,
-              height: IMAGE_SIZE,
-            }}
-          />
-        </BorderlessButton>
-        <View style={styles.avatarContainer}>
-          <GravatarImage email={item.email} style={styles.avatar} />
-        </View>
-      </View>
+      <FeedItem
+        item={item}
+        style={{
+          paddingTop: 6,
+          paddingLeft:
+            index % 2 === 0 ? IMAGE_MARGIN_OUTSIDE : IMAGE_MARGIN_INSIDE,
+          paddingRight:
+            index % 2 === 0 ? IMAGE_MARGIN_INSIDE : IMAGE_MARGIN_OUTSIDE,
+        }}
+        size={IMAGE_SIZE}
+        onPressPost={this.props.onPressPost}
+      />
     );
   };
 }
@@ -115,18 +103,5 @@ const styles = StyleSheet.create({
   },
   listContentContainer: {
     paddingBottom: isIphoneX() ? 110 : 90,
-  },
-  avatarContainer: {
-    position: 'absolute',
-    bottom: 5,
-    left: 10,
-  },
-  avatar: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-  },
-  item: {
-    flex: 1,
   },
 });

@@ -9,6 +9,7 @@ import AuthScannerScreen from './screens/AuthScannerScreen';
 import EditPostScreen from './screens/EditPostScreen';
 import FeedScreen from './screens/FeedScreen';
 import LoadingScreen from './screens/LoadingScreen';
+import LotteryScreen from './screens/LotteryScreen';
 
 let EditPostStack = createStackNavigator(
   {
@@ -24,7 +25,7 @@ let EditPostStack = createStackNavigator(
         backgroundColor: '#fff',
       },
     },
-  }
+  },
 );
 
 EditPostStack.navigationOptions = {
@@ -37,6 +38,7 @@ let MainStack = createStackNavigator(
     Feed: FeedScreen,
     AuthScanner: AuthScannerScreen,
     EditPostStack: EditPostStack,
+    Lottery: LotteryScreen,
   },
   {
     initialRouteName: 'Feed',
@@ -49,7 +51,7 @@ let MainStack = createStackNavigator(
         backgroundColor: '#fff',
       },
     },
-  }
+  },
 );
 
 let AuthStack = createStackNavigator(
@@ -60,7 +62,7 @@ let AuthStack = createStackNavigator(
   {
     mode: 'modal',
     headerMode: 'none',
-  }
+  },
 );
 
 let AppNavigator = createSwitchNavigator(
@@ -71,7 +73,7 @@ let AppNavigator = createSwitchNavigator(
   },
   {
     initialRouteName: 'Loading',
-  }
+  },
 );
 
 export default class App extends React.Component {
